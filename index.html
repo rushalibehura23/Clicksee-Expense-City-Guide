@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clicksee</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <div class="navbar" id="navbar">
+    <h2>Clicksee</h2>
+    <div class="navbar-right">
+      <nav>
+        <a href="#" onclick="goToDistricts()">Home</a>
+        <a href="#" onclick="showAboutUs()">About Us</a>
+        <a href="#" onclick="showContactUs()">Contact Us</a>
+      </nav>
+      <button class="dark-toggle" id="darkModeToggle">🌙 Dark Mode</button>
+      <button class="back-btn" id="backBtn">← Back</button>
+    </div>
+  </div>
+
+  <div id="loginPage" class="container">
+    <div class="overlay"></div>
+    <div class="login-card">
+      <h1>Clicksee</h1>
+      <p>Plan smarter moves. Compare cities, costs & opportunities.</p>
+      <form onsubmit="handleLogin(event)">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit" class="btn btn-email">Login</button>
+      </form>
+      <button class="btn btn-google" onclick="handleGoogleLogin()">Continue with Google</button>
+      <button class="btn btn-skip" onclick="goToDistricts()">Skip for now</button>
+      <div class="footer">
+        © 2025 Clicksee. Your use of this service is subject to our
+        <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+      </div>
+    </div>
+  </div>
+
+  <div id="districtsPage" class="container hidden with-navbar">
+    <h1 id="pageTitle">Select a District</h1>
+    <div class="search-container">
+      <input type="text" id="districtSearch" placeholder="Search">
+      <button class="search-btn">🔍 Search</button>
+    </div>
+    <div id="districtCards" class="cards"></div>
+    <div class="professional-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <p>📍 Clicksee Office: Bhubaneswar, Odisha</p>
+          <p>✉️ <a href="clicksee123@gamil.com"><span class="__cf_email__" data-cfemail="a695939696899492a6858a8f858d958383c885898b">[email&#160;protected]</span></a></p>
+        </div>
+        <div class="footer-section">
+          <p>Follow us:</p>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/clicksee" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png" alt="Facebook"></a>
+            <a href="https://twitter.com/clicksee" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/twitter.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/clicksee" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="districtDetailPage" class="container hidden with-navbar">
+    <h1 id="districtTitle"></h1>
+    <img id="districtImage">
+    <p id="districtDescription"></p>
+    <div class="search-container">
+      <input type="text" id="instituteSearch" placeholder="Search">
+      <button class="search-btn">🔍 Search</button>
+    </div>
+    <h2 id="instituteHeading" class="hidden">Famous Educational Institutes</h2>
+    <div id="instituteCards" class="cards"></div>
+    <a href="#" class="back-link" onclick="showExpenseCalculator(document.getElementById('districtTitle').textContent)">Open Expense Calculator And Maps</a>
+    <div class="mini-footer">
+      <p>📍 Clicksee Office: Bhubaneswar, Odisha</p>
+      <p>✉️ <a href="clicksee123@gamil.com"><span class="__cf_email__" data-cfemail="2e1d1b1e1e011c1a2e0d02070d051d0b0b400d0103">[email&#160;protected]</span></a></p>
+      <p>☎️ <a href="tel:+919876543210">+91-9876543210</a></p>
+    </div>
+  </div>
+
+  <div id="instituteDetailPage" class="container hidden with-navbar">
+    <h1 id="instituteTitle"></h1>
+    <img id="instituteImage">
+    <div id="instituteInfo"></div>
+    <div class="mini-footer">
+      <p>📍 Clicksee Office: Bhubaneswar, Odisha</p>
+      <p>✉️ <a href="clicksee123@gamil.com"><span class="__cf_email__" data-cfemail="c0b3b5b0b0afb2b480a3aca9a3abb3a5a5eea3afad">[email&#160;protected]</span></a></p>
+      <p>☎️ <a href="tel:+919876543210">+91-9876543210</a></p>
+    </div>
+  </div>
+
+  <div id="expenseCalculator" class="container hidden with-navbar">
+    <h1>Expenses Calculator And Maps</h1>
+    <p>Select an Institute or IT Company:</p>
+    <select id="expenseSelector">
+      <option value="">-- Select --</option>
+    </select>
+    <p>Enter your monthly budget (₹):</p>
+    <input type="number" id="monthlyBudget" placeholder="Enter amount">
+    <div style="display: flex; justify-content: center; gap: 10px;">
+      <button class="btn btn-email" onclick="calculateExpenses()">Calculate</button>
+      <button class="btn btn-email" onclick="showMaps()">View Maps</button>
+    </div>
+    <div id="expenseResult"></div>
+    <div class="mini-footer">
+      <p>📍 Clicksee Office: Bhubaneswar, Odisha</p>
+      <p>✉️ <a href="clicksee123@gamil.com"><span class="__cf_email__" data-cfemail="a5d6d0d5d5cad7d1e5c6c9ccc6ced6c0c0bc6cac8">[email&#160;protected]</span></a></p>
+      <p>☎️ <a href="tel:+919876543210">+91-9876543210</a></p>
+    </div>
+  </div>
+
+  <div id="aboutUsPage" class="container hidden with-navbar">
+    <h1>About Us</h1>
+    <p>Clicksee is dedicated to helping students find the best locations for PGs, restaurants, and bus routes in Odisha, along with an expense calculator to plan their budget effectively.</p>
+    <div class="mini-footer">
+      <p>📍 Clicksee Office: Bhubaneswar, Odisha</p>
+      <p>✉️ <a href="clicksee123@gamil.com"><span class="__cf_email__" data-cfemail="785b4d4848574a4c785b54515b534b5d5d165b5755">[email&#160;protected]</span></a></p>
+      <p>☎️ <a href="tel:+919876543210">+91-9876543210</a></p>
+    </div>
+  </div>
+
+  <div id="contactUsPage" class="container hidden with-navbar">
+    <h1>Contact Us</h1>
+    <p>📍 Clicksee Office: Bhubaneswar, Odisha</p>
+    <p>✉️ <a href="/cdn-cgi/l/email-protection#2e1d1b1e1e011c1a2e0d02070d051d0b0b400d0103"><span class="__cf_email__" data-cfemail="a695939696899492a6858a8f858d958383c885898b">[email&#160;protected]</span></a></p>
+    <p>☎️ <a href="tel:+919876543210">+91-9876543210</a></p>
+    <div class="mini-footer">
+      <p>📍 Clicksee Office: Bhubaneswar, Odisha</p>
+      <p>✉️ <a href="clicksee123@gamil.com">[email&#160;protected]</span></a></p>
+      <p>☎️ <a href="tel:+919876543210">+91-9876543210</a></p>
+    </div>
+  </div>
+
+  <div id="mapsPage" class="container hidden with-navbar">
+    <h1>Nearby Maps</h1>
+    <div>
+      <h2>Restaurants</h2>
+      <div id="restaurantsMap" style="height: 300px; width: 100%; margin: 10px auto;"></div>
+      <h2>Bus Stops</h2>
+      <div id="busStopsMap" style="height: 300px; width: 100%; margin: 10px auto;"></div>
+      <h2>PGs to Stay</h2>
+      <div id="pgsMap" style="height: 300px; width: 100%; margin: 10px auto;"></div>
+    </div>
+    <div class="mini-footer">
+      <p>📍 Clicksee Office: Bhubaneswar, Odisha</p>
+      <p>✉️ <a href="clicksee123@gamil.com"><span class="__cf_email__" data-cfemail="a5d6d0d5d5cad7d1e5c6c9ccc6ced6c0c0bc6cac8">[email&#160;protected]</span></a></p>
+      <p>☎️ <a href="tel:+919876543210">+91-9876543210</a></p>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
